@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/game_bottom_navigation_play"
+        android:icon="@drawable/ic_local_play_black_24dp"
+        android:title="@string/menu_play" />
+
+    <item
+        android:id="@+id/game_bottom_navigation_upgrades"
+        android:icon="@drawable/ic_extension_black_24dp"
+        android:title="@string/menu_upgrades" />
+
+    <item
+        android:id="@+id/game_bottom_navigation_back"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:title="@string/menu_back" />
+
+</menu>
