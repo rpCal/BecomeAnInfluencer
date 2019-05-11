@@ -5,7 +5,11 @@
     <string name="activity_title_main_activity">Ekran rozpoczęcia</string>
 
 
-    <string name="points_label">Punktów</string>
+    <string name="points_label">pkt</string>
+    <string name="points_per_second_label">pkt/sec</string>
+    <string name="remaining_points_label">Do końca gry pozostało</string>
+    <string name="total_time_in_secound_label">s</string>
+
 
     <string name="start_game_button">Rozpocznij nowa gre</string>
     <string name="continue_game_button">Kontynuj gre</string>
@@ -14,7 +18,9 @@
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_back">Cofnij</string>
     <string name="menu_upgrades">Usprawnienia</string>
+    <string name="menu_archivements">Osiągnięcia</string>
     <string name="menu_play">Graj</string>
     <string name="game_history_deleted">Historia wyczyszczona</string>
+    <string name="game_history_delete_error">Nie powodzenie podczas czyszczenia histori</string>
     <string name="game_history_delete_button">Wyczyść historie</string>
 </resources>

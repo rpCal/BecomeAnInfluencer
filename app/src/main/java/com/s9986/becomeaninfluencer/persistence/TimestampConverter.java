@@ -15,7 +15,7 @@ public class TimestampConverter {
     public static Date fromTimestamp(String value) {
         if (value != null) {
             try {
-                TimeZone timeZone = TimeZone.getTimeZone("IST");
+                TimeZone timeZone = TimeZone.getTimeZone("UTC");
                 df.setTimeZone(timeZone);
                 return df.parse(value);
             } catch (ParseException e) {
@@ -30,7 +30,7 @@ public class TimestampConverter {
 
     @TypeConverter
     public static String dateToTimestamp(Date value) {
-        TimeZone timeZone = TimeZone.getTimeZone("IST");
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
         df.setTimeZone(timeZone);
         return value == null ? null : df.format(value);
     }

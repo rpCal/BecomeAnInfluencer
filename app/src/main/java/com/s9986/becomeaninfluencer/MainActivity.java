@@ -10,17 +10,17 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.s9986.becomeaninfluencer.game.DetailViewModel;
 import com.s9986.becomeaninfluencer.game.GameActivity;
 import com.s9986.becomeaninfluencer.persistence.GameData;
-import com.s9986.becomeaninfluencer.persistence.GameDataRepository;
-import com.s9986.becomeaninfluencer.settings.SettingsActivity;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    GameDataRepository gameDataRepository;
+    private DetailViewModel model;
     Button startNewGameButton;
     Button startOldGameButton;
     Button showRankingButton;
@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prepareViews();
+        addEventListeners();
+        addObservables();
+    }
+
+    private void prepareViews(){
         setContentView(R.layout.main_activity);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -35,26 +41,28 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        gameDataRepository = new GameDataRepository(getApplicationContext());
+        model = ViewModelProviders.of(this).get(DetailViewModel .class);
         startNewGameButton = findViewById(R.id.go_to_new_game_activity_button);
         startOldGameButton = findViewById(R.id.go_to_old_game_activity_button);
         showRankingButton = findViewById(R.id.go_to_ranking_activity_button);
-
-        initGameStartButtonListener();
     }
 
 
-    public void initGameStartButtonListener() {
+    private void addEventListeners() {
 
         startNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                model.insertNewIfNeeded();
                 Intent i = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(i);
             }
         });
+    }
 
-        gameDataRepository.fetchGameInProgress().observe(this, new Observer<GameData>() {
+    private void addObservables(){
+
+        model.fetchGameInProgress().observe(this, new Observer<GameData>() {
             @Override
             public void onChanged(@Nullable GameData gameData) {
                 if(gameData != null) {
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        gameDataRepository.fetchTop10RankingGames().observe(this, new Observer<List<GameData>>() {
+        model.fetchTop10RankingGames().observe(this, new Observer<List<GameData>>() {
             @Override
             public void onChanged(@Nullable List<GameData> games) {
                 if(games.size() > 0) {
@@ -80,12 +88,14 @@ public class MainActivity extends AppCompatActivity {
                     showRankingButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent i = new Intent(MainActivity.this, GameActivity.class);
+                            Intent i = new Intent(MainActivity.this, RankingActivity.class);
                             startActivity(i);
                         }
                     });
+                    showRankingButton.setAlpha(1.0f);
                 }else{
-                    showRankingButton.setVisibility(View.GONE);
+                    showRankingButton.setVisibility(View.VISIBLE);
+                    showRankingButton.setAlpha(0.5f);
                 }
             }
         });
@@ -110,16 +120,19 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private void testAddRankingGameData(){
-        GameData gameData = new GameData();
-        gameData.setIn_progress(0);
-        gameData.setGame_finished(1);
-        gameData.setTotal_time_in_secound(100);
-        gameData.setTotal_spend(0);
-        gameData.setTotal_taps(100);
-        gameData.setTotal_points_sum(1000);
-        gameData.setTotal_points(1000);
-        gameData.setPoints_per_second(0.3);
-        gameDataRepository.insertGameData(gameData);
-    }
+//    private void testAddRankingGameData(){
+//
+//
+//        GameData gameData = new GameData();
+//        gameData.setIn_progress(0);
+//        gameData.setGame_finished(1);
+//        gameData.setTotal_time_in_secound(100);
+//        gameData.setTotal_spend(0);
+//        gameData.setTotal_taps(100);
+//        gameData.setTotal_points_sum(1000);
+//        gameData.setTotal_points(1000);
+//        gameData.setPoints_per_second(0.3);
+//        GameDataRepository gameDataRepository = new GameDataRepository(getApplicationContext());
+//        gameDataRepository.insertGameData(gameData);
+//    }
 }

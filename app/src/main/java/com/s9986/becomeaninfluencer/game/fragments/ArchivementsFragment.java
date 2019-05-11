@@ -1,4 +1,4 @@
-package com.s9986.becomeaninfluencer.game.fragments.play;
+package com.s9986.becomeaninfluencer.game.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,11 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.s9986.becomeaninfluencer.R;
-import com.s9986.becomeaninfluencer.game.GameData;
 
-public class PlayFragment extends Fragment {
+public class ArchivementsFragment extends Fragment {
 
-    private GameData data;
+//    private GameData data;
     private Handler mHandler = null;
     private Runnable runnable = null;
 
@@ -47,13 +46,13 @@ public class PlayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstance)
     {
-        return inflater.inflate(R.layout.play_fragment, null);
+        return inflater.inflate(R.layout.archivement_fragment, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initCoinClickButtonAction();
-        initCoinValueText();
+//        initCoinClickButtonAction();
+//        initCoinValueText();
 //        coin_animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation_animation);
         textView = getView().findViewById(R.id.points_textView);
 
@@ -86,43 +85,43 @@ public class PlayFragment extends Fragment {
 //        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         lastUpdate = System.currentTimeMillis();
 
-        coinsRefresher();
+//        coinsRefresher();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mHandler != null && runnable != null){
-            mHandler.removeCallbacksAndMessages(runnable);
-        }
+//        if(mHandler != null && runnable != null){
+//            mHandler.removeCallbacksAndMessages(runnable);
+//        }
 
     }
 
-    private void coinsRefresher()
-    {
-        mHandler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                {
-                    long coinsValue = data.getCoinsValue();
-                    String text;
-
-                    if(coinsValue < data.getMaxCoinsValue())
-                        text="Coins: "+coinsValue;
-                    else
-                        text="You are so rich!";
-
-                    textView.setText(text);
-
-                    if(mHandler != null){
-                        mHandler.postDelayed(this, 100);
-                    }
-                }
-            }
-        };
-        mHandler.post(runnable);
-    }
+//    private void coinsRefresher()
+//    {
+//        mHandler = new Handler();
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                {
+//                    long coinsValue = data.getCoinsValue();
+//                    String text;
+//
+//                    if(coinsValue < data.getMaxCoinsValue())
+//                        text="Coins: "+coinsValue;
+//                    else
+//                        text="You are so rich!";
+//
+//                    textView.setText(text);
+//
+//                    if(mHandler != null){
+//                        mHandler.postDelayed(this, 100);
+//                    }
+//                }
+//            }
+//        };
+//        mHandler.post(runnable);
+//    }
 
     @Override
     public void onStop() {
@@ -133,20 +132,20 @@ public class PlayFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        coinsRefresher();
+//        coinsRefresher();
     }
 
     public void initCoinClickButtonAction()
     {
-        play_button = (ImageButton) getView().findViewById(R.id.click_element);
-        play_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v)
-            {
-                addCoins();
-            }
-        });
+//        play_button = (ImageButton) getView().findViewById(R.id.click_element);
+//        play_button.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v)
+//            {
+//                addCoins();
+//            }
+//        });
     }
 
     private void initCoinValueText() {

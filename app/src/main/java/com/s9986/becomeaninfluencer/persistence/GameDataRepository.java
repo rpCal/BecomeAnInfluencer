@@ -3,6 +3,7 @@ package com.s9986.becomeaninfluencer.persistence;
 import android.content.Context;
 import android.icu.util.Calendar;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
@@ -16,7 +17,25 @@ public class GameDataRepository {
     private GameDataDatabase gameDataDatabase;
 
     public GameDataRepository(Context context) {
-        gameDataDatabase = Room.databaseBuilder(context, GameDataDatabase.class, DB_NAME).build();
+        gameDataDatabase = Room.databaseBuilder(context, GameDataDatabase.class, DB_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
+    }
+
+    public void insertNewIfNeeded(){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                GameData gameInProgres = fetchGameInProgress().getValue();
+                if(gameInProgres == null){
+                    insertDefaultGameData();
+                    Log.d("GameDataRepository", "New GameData created");
+                }else{
+                    Log.d("GameDataRepository", "GameData restored");
+                }
+                return null;
+            }
+        }.execute();
     }
 
     public void insertDefaultGameData() {
@@ -32,6 +51,7 @@ public class GameDataRepository {
         gameData.setTotal_taps(0);
         gameData.setTotal_spend(0);
         gameData.setTotal_time_in_secound(0);
+        gameData.setUpdates_progress("[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]");
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -96,10 +116,28 @@ public class GameDataRepository {
         return gameDataDatabase.daoAccess().fetchGameInProgress();
     }
 
+    public GameData getGameInProgress() {
+        return gameDataDatabase.daoAccess().getGameInProgress();
+    }
+
+
+    public LiveData<List<GameData>> fetchAllGames() {
+        return gameDataDatabase.daoAccess().fetchAllGames();
+    }
+
     public LiveData<List<GameData>> fetchTop10RankingGames() {
         return gameDataDatabase.daoAccess().fetchTop10RankingGames();
     }
 
+    public void deleteAllGames() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                gameDataDatabase.daoAccess().deleteAllGame();
+                return null;
+            }
+        }.execute();
+    }
 
     private Date getCurrentDateTime(){
         return Calendar.getInstance().getTime();

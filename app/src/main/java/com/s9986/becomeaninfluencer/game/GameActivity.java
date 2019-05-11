@@ -1,118 +1,51 @@
 package com.s9986.becomeaninfluencer.game;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.s9986.becomeaninfluencer.MainActivity;
 import com.s9986.becomeaninfluencer.R;
-import com.s9986.becomeaninfluencer.game.fragments.play.PlayFragment;
+import com.s9986.becomeaninfluencer.RankingActivity;
+import com.s9986.becomeaninfluencer.game.fragments.ArchivementsFragment;
+import com.s9986.becomeaninfluencer.game.fragments.PlayFragment;
+import com.s9986.becomeaninfluencer.game.fragments.UpgradesFragment;
+import com.s9986.becomeaninfluencer.persistence.GameData;
+import com.s9986.becomeaninfluencer.persistence.GameDataConstant;
+import com.s9986.becomeaninfluencer.persistence.GameDataRepository;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+public class GameActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, LifecycleOwner {
 
-public class GameActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-    GameData data;
-
-    private String fileName = "data.txt";
-
-    private boolean flagThread;
+    private Handler mHandler = null;
+    private Runnable runnable = null;
+    private DetailViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prepareViews();
+        loadFragment(new PlayFragment());
+        gameTimer();
+    }
+
+    private void prepareViews(){
         getSupportActionBar().hide();
         setContentView(R.layout.game_activity);
 
-        flagThread = true;
-
         BottomNavigationView navigation = findViewById(R.id.game_bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
-        loadJson();
-
-        loadFragment(new PlayFragment());
-
-        Bundle bundle = new Bundle();
-        bundle.putString("edttext", "From Activity");
-
-
-        PlayFragment fragment = new PlayFragment();
-        fragment.setArguments(bundle);
+        model = ViewModelProviders.of(this).get(DetailViewModel.class);
     }
 
-    private void threads() {
-        //<editor-fold desc="piggyRunnable">
-        Runnable piggyRunnable = new Runnable() {
-            @Override
-            public void run() {
-                synchronized (this) {
-                    while (flagThread) {
-                        long coinsValue = data.getCoinsValue();
-
-                        if (coinsValue < data.getMaxCoinsValue()) {
-                            data.setCoinsValue(coinsValue
-                                    + data.getGreedyPiggyNum()
-                                    + 10 * data.getLittleTommyNum()
-                                    + 50 * data.getBusinessPackNum()
-                                    + 200 * data.getSlyMarioNum());
-                            try {
-                                wait(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        } else
-                            data.setCoinsValue(data.getMaxCoinsValue());
-
-                    }
-                }
-            }
-        };
-        //</editor-fold>
-
-        Thread piggyThread = new Thread(piggyRunnable);
-        piggyThread.start();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        flagThread = false;
-        saveJson();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        flagThread = true;
-        threads();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(GameActivity.this, MainActivity.class);
-        startActivity(i);
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -122,12 +55,14 @@ public class GameActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.game_bottom_navigation_play: {
                 fragment = new PlayFragment();
                 break;
-//                return false;
+            }
+            case R.id.game_bottom_navigation_archivements: {
+                fragment = new ArchivementsFragment();
+                break;
             }
             case R.id.game_bottom_navigation_upgrades: {
-//                fragment = new ShopFragment(data);
-//                break;
-                return false;
+                fragment = new UpgradesFragment();
+                break;
             }
             case R.id.game_bottom_navigation_back: {
                 Intent intent = new Intent(this, MainActivity.class);
@@ -150,67 +85,71 @@ public class GameActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    private void saveJson() {
+    private void gameTimer(){
+        clearGameTick();
+        mHandler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            GameData gameData = model.getGameInProgress();
+                            if(gameData != null){
+                                gameData.clockTick();
+                                model.updateGameData(gameData);
+                                if(gameData.getGame_finished() == GameDataConstant.GAME_FINISHED_VALUE){
+                                    Intent i = new Intent(GameActivity.this, RankingActivity.class);
+                                    startActivity(i);
+                                    clearGameTick();
+                                    model.finishGame();
+                                }
+//                                Log.d("GameActivity", gameData.toString());
+                            }
+                            Log.d("GameActivity", "gameData.clockTick ");
+                            return null;
+                        }
+                    }.execute();
 
-        File file = new File(getApplicationContext().getDir("", Context.MODE_PRIVATE), fileName);
-        OutputStream outputStream = null;
-        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting()
-                .create();
-        try {
-            outputStream = new FileOutputStream(file);
-            BufferedWriter bufferedWriter;
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,
-                    StandardCharsets.UTF_8));
-
-            gson.toJson(data, GameData.class, bufferedWriter);
-            bufferedWriter.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if(mHandler != null){
+                        mHandler.postDelayed(this, 1000);
+                    }
                 }
             }
-        }
-
+        };
+        mHandler.post(runnable);
     }
 
-
-    private void loadJson() {
-        data = new GameData();
-
-        File file = new File(getApplicationContext().getDir("", Context.MODE_PRIVATE), fileName);
-        InputStream inputStream = null;
-        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting()
-                .create();
-        try {
-            inputStream = new FileInputStream(file);
-            InputStreamReader streamReader;
-            streamReader = new InputStreamReader(inputStream,
-                    StandardCharsets.UTF_8);
-
-            data = gson.fromJson(streamReader, GameData.class);
-            streamReader.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    private void clearGameTick(){
+        if(mHandler != null && runnable != null) {
+            mHandler.removeCallbacks(runnable);
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        clearGameTick();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearGameTick();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        gameTimer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        clearGameTick();
+        Intent i = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(i);
+    }
+
 }

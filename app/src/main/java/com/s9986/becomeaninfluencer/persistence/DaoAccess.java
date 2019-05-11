@@ -12,11 +12,17 @@ import java.util.List;
 @Dao
 public interface DaoAccess {
 
+    @Query("SELECT * FROM GameData ORDER BY created_at desc")
+    LiveData<List<GameData>> fetchAllGames();
+
     @Query("SELECT * FROM GameData WHERE in_progress = 0 AND game_finished = 1 ORDER BY total_time_in_secound ASC, created_at desc LIMIT 10")
     LiveData<List<GameData>> fetchTop10RankingGames();
 
     @Query("SELECT * FROM GameData WHERE in_progress = 1 ORDER BY created_at desc LIMIT 1")
     LiveData<GameData> fetchGameInProgress();
+
+    @Query("SELECT * FROM GameData WHERE in_progress = 1 ORDER BY created_at desc LIMIT 1")
+    GameData getGameInProgress();
 
     @Query("SELECT * FROM GameData WHERE id = :gameId")
     LiveData<GameData> getGame(int gameId);
@@ -32,4 +38,6 @@ public interface DaoAccess {
     void deleteGame(GameData gameData);
 
 
+    @Query("DELETE FROM GameData")
+    void deleteAllGame();
 }
