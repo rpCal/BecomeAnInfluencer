@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "361516475996",
+    "firebase_url": "https://prm-becomeaninfluencer.firebaseio.com",
+    "project_id": "prm-becomeaninfluencer",
+    "storage_bucket": "prm-becomeaninfluencer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361516475996:android:de7abb1b525dbbcb",
+        "android_client_info": {
+          "package_name": "com.s9986.becomeaninfluencer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361516475996-h3iuui15mhjj9tpgdr9393ei879eahqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDagxAeCZ2lEzGvJX8Q_S-xbTzZ7fB_Wks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361516475996-h3iuui15mhjj9tpgdr9393ei879eahqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

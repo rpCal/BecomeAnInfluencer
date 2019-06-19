@@ -51,7 +51,7 @@ public class GameDataRepository {
         gameData.setTotal_taps(0);
         gameData.setTotal_spend(0);
         gameData.setTotal_time_in_secound(0);
-        gameData.setUpdates_progress("[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]");
+        gameData.setUpdates_progress("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
 
         new AsyncTask<Void, Void, Void>() {
             @Override

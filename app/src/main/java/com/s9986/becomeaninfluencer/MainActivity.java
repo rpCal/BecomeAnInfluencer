@@ -7,11 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.firebase.ui.auth.viewmodel.AuthViewModelBase;
+import com.google.firebase.auth.FirebaseAuth;
 import com.s9986.becomeaninfluencer.game.DetailViewModel;
 import com.s9986.becomeaninfluencer.game.GameActivity;
 import com.s9986.becomeaninfluencer.persistence.GameData;
@@ -20,10 +23,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DetailViewModel model;
-    Button startNewGameButton;
-    Button startOldGameButton;
+//    private DetailViewModel model;
+    Button gotoLoginScreen;
+    Button gotoNewItemScreen;
+    Button gotoItemsList;
     Button showRankingButton;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
         addObservables();
     }
 
-    private void prepareViews(){
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    private void prepareViews() {
         setContentView(R.layout.main_activity);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -41,66 +53,93 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        model = ViewModelProviders.of(this).get(DetailViewModel .class);
-        startNewGameButton = findViewById(R.id.go_to_new_game_activity_button);
-        startOldGameButton = findViewById(R.id.go_to_old_game_activity_button);
-        showRankingButton = findViewById(R.id.go_to_ranking_activity_button);
-    }
+        gotoNewItemScreen = findViewById(R.id.go_to_new_shop_activity);
+        gotoLoginScreen = findViewById(R.id.go_to_new_game_activity_button);
+        gotoItemsList = findViewById(R.id.go_to_old_game_activity_button);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (mAuth.getCurrentUser()==null){
+                    Intent loginIntent = new Intent(MainActivity.this, EmailPasswordActivity.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(loginIntent);
+                }
+            }
+        };
+    }
 
     private void addEventListeners() {
 
-        startNewGameButton.setOnClickListener(new View.OnClickListener() {
+        gotoLoginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.insertNewIfNeeded();
-                Intent i = new Intent(MainActivity.this, GameActivity.class);
+                Intent i = new Intent(MainActivity.this, ShopMapActivity.class);
                 startActivity(i);
             }
         });
-    }
 
-    private void addObservables(){
-
-        model.fetchGameInProgress().observe(this, new Observer<GameData>() {
+        gotoItemsList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable GameData gameData) {
-                if(gameData != null) {
-                    startOldGameButton.setVisibility(View.VISIBLE);
-                    startOldGameButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(MainActivity.this, GameActivity.class);
-                            startActivity(i);
-                        }
-                    });
-                }else{
-                    startOldGameButton.setVisibility(View.GONE);
-                }
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MainUserListActivity.class);
+                startActivity(i);
             }
         });
 
-        model.fetchTop10RankingGames().observe(this, new Observer<List<GameData>>() {
+        gotoNewItemScreen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable List<GameData> games) {
-                if(games.size() > 0) {
-                    showRankingButton.setVisibility(View.VISIBLE);
-                    showRankingButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(MainActivity.this, RankingActivity.class);
-                            startActivity(i);
-                        }
-                    });
-                    showRankingButton.setAlpha(1.0f);
-                }else{
-                    showRankingButton.setVisibility(View.VISIBLE);
-                    showRankingButton.setAlpha(0.5f);
-                }
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, AddAndEditShopActivity.class);
+                startActivity(i);
             }
         });
+
+
     }
 
+    private void addObservables() {
+
+//        model.fetchGameInProgress().observe(this, new Observer<GameData>() {
+//            @Override
+//            public void onChanged(@Nullable GameData gameData) {
+//                if (gameData != null) {
+//                    startOldGameButton.setVisibility(View.VISIBLE);
+//                    startOldGameButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(MainActivity.this, GameActivity.class);
+//                            startActivity(i);
+//                        }
+//                    });
+//                } else {
+//                    startOldGameButton.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
+//        model.fetchTop10RankingGames().observe(this, new Observer<List<GameData>>() {
+//            @Override
+//            public void onChanged(@Nullable List<GameData> games) {
+//                if (games.size() > 0) {
+//                    showRankingButton.setVisibility(View.VISIBLE);
+//                    showRankingButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(MainActivity.this, RankingActivity.class);
+//                            startActivity(i);
+//                        }
+//                    });
+//                    showRankingButton.setAlpha(1.0f);
+//                } else {
+//                    showRankingButton.setVisibility(View.VISIBLE);
+//                    showRankingButton.setAlpha(0.5f);
+//                }
+//            }
+//        });
+    }
 
 
     @Override

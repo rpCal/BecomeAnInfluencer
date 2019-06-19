@@ -10,10 +10,39 @@
     <string name="remaining_points_label">Do końca gry pozostało</string>
     <string name="total_time_in_secound_label">s</string>
 
+    <string name="archivement_0_total_click_label">Kliknij ponad 100 razy</string>
+    <string name="archivement_1_total_points_label">Zdobadz 1k punktow</string>
+    <string name="archivement_2_total_secounds_label">Graj ponad 10s</string>
+    <string name="archivement_3_total_spend_label">Wydaj 1k na ulepszenia</string>
 
-    <string name="start_game_button">Rozpocznij nowa gre</string>
-    <string name="continue_game_button">Kontynuj gre</string>
-    <string name="show_ranking_button">Zobacz ranking</string>
+    <string name="upgrade_0">1. Liczba postów na fb - </string>
+    <string name="upgrade_1">1a. Ulepsz - </string>
+
+    <string name="upgrade_2">2. Liczba postów na instagramie - </string>
+    <string name="upgrade_3">2a. Ulepsz - </string>
+
+    <string name="upgrade_4">3. Liczba wpisow na reddit - </string>
+    <string name="upgrade_5">3a. Ulepsz - </string>
+
+    <string name="upgrade_6">4. Liczba wpisow na wykopie - </string>
+    <string name="upgrade_7">4a. Ulepsz - </string>
+
+    <string name="upgrade_8">5. Liczba wpisow na stapchat - </string>
+    <string name="upgrade_9">5a. Ulepsz - </string>
+
+    <string name="upgrade_10">6. Liczba wpisow na twitter - </string>
+    <string name="upgrade_11">6a. Ulepsz - </string>
+
+    <string name="upgrade_12">7. Liczba podcastow - </string>
+    <string name="upgrade_13">7a. Ulepsz - </string>
+
+    <string name="upgrade_14">8. Liczba filmow na youtube - </string>
+    <string name="upgrade_15">8a. Ulepsz - </string>
+
+
+    <string name="start_game_button">Zaloguj się</string>
+    <string name="continue_game_button">Zobacz Twoje sklepy</string>
+    <string name="show_ranking_button">Zobacz wpisy</string>
 
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_back">Cofnij</string>
@@ -23,4 +52,113 @@
     <string name="game_history_deleted">Historia wyczyszczona</string>
     <string name="game_history_delete_error">Nie powodzenie podczas czyszczenia histori</string>
     <string name="game_history_delete_button">Wyczyść historie</string>
+
+
+
+
+    <string name="label_google_sign_in">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+
+    <string name="label_facebook_login">Firebase + Facebook Login</string>
+    <string name="desc_facebook_login">Use a Facebook Login credential to authenticate with Firebase.</string>
+
+    <string name="label_twitter_login">Firebase + Twitter Login</string>
+    <string name="desc_twitter_login">Use a Twitter Login credential to authenticate with Firebase.</string>
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+
+    <string name="label_passwordless">Passwordless Authentication</string>
+    <string name="desc_passwordless">Use only an email to authenticate with Firebase.</string>
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+
+    <string name="label_anonymous_auth">Anonymous Authentication</string>
+    <string name="desc_anonymous_auth">Sign in anonymously and then later upgrade to a full Firebase Auth user.</string>
+
+    <string name="label_custom_auth">Custom Authentication</string>
+    <string name="desc_custom_auth">Use a custom token signed by your own server to authenticate with Firebase.</string>
+
+    <string name="label_firebase_ui">FirebaseUI Auth</string>
+    <string name="desc_firebase_ui">Use the FirebaseUI-Android library to authenticate with Firebase.</string>
+
+    <string name="label_generic_idp">Generic IDP Auth</string>
+    <string name="desc_generic_idp">Use a generic identity provider, like Microsoft or Yahoo, to authenticate with Firebase.</string>
+
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Pobierz token</string>
+    <string name="sign_in">Zaloguj sie</string>
+    <string name="create_account">Nowe konto</string>
+    <string name="send_link">Wyslij Link</string>
+    <string name="sign_out">Wyloguj sie</string>
+    <string name="verify_email">Sprawdz Email</string>
+    <string name="disconnect">Rozłączono</string>
+    <string name="loading">Wcztytuje…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_in">Zalogowany</string>
+    <string name="signed_out">Wylogowany</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Haslo</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Nie udalo sie zalogowac</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Sprawdz</string>
+    <string name="resend_phone_auth">Wyslij</string>
+    <string name="hint_phone_number">Numer telefonu</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="facebook_status_fmt">Facebook User: %s</string>
+    <string name="facebook_title_text">Facebook Login</string>
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Email and Password</string>
+
+    <string name="passwordless_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="passwordless_title_text">Passwordless Sign In</string>
+    <string name="status_email_not_sent">Send link to your email to get started.</string>
+    <string name="status_email_sent">Link sent, check your email to continue.</string>
+    <string name="status_link_found">Link received, enter email to sign in.</string>
+
+    <string name="phone_title_text">Phone Number</string>
+
+    <string name="twitter_status_fmt">Twitter User: %s</string>
+    <string name="twitter_title_text">Twitter Login</string>
+
+    <string name="firebaseui_status_fmt">Firebase User: %s</string>
+    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+
+    <string name="generic_title_text">Generic IDP Sign In\nwith Microsoft</string>
+    <string name="msft_status_fmt">Microsoft User: %s</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+
+
+
+    <string name="action_settings">Setting</string>
+    <string name="menu_login">Zaloguj sie</string>
+    <string name="menu_logout">Wyloguj sie</string>
+    <string name="login_label">Zaloguj sie</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Haslo</string>
+    <string name="send_text">Wyslij</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec condimentum ante, quis mattis mi. Proin ut rhoncus libero, ac euismod neque. Ut suscipit, enim a facilisis consequat, orci lacus venenatis orci, at ultricies orci nulla sed ex. In condimentum viverra velit, eget feugiat libero imperdiet vel. Aenean pretium, lectus vitae bibendum bibendum, diam turpis convallis eros, quis tristique leo sapien at ipsum. Praesent eu odio id nulla lobortis auctor. Donec eget dolor eget nisl euismod commodo vel a lacus. Quisque ut justo vitae urna pharetra accumsan. Etiam dignissim neque iaculis mauris viverra, blandit rhoncus odio porttitor. Phasellus nibh arcu.</string>
+    <string name="title_sign_in">Czesc</string>
+    <string name="sign_up">Rejestracja</string>
+    <string name="heading_recent">Ostatnie</string>
+    <string name="heading_my_posts">Moje wpisy</string>
+    <string name="heading_my_top_posts">Moje najlepsze wpisy</string>
 </resources>

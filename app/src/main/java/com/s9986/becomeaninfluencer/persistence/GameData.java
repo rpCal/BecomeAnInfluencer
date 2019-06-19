@@ -76,7 +76,10 @@ public class GameData implements Serializable {
         }
         setTotal_points(getTotal_points() - upgradePrice);
         setTotal_spend(getTotal_spend() + upgradePrice);
-        //updates_progress
+
+        String[] upgrades =  getUpdates_progress().split(",");
+        upgrades[upgradeIndex] = upgrades[upgradeIndex] + 1;
+        setUpdates_progress(String.join(",", upgrades));
 
         if(checkFinishGame()){
             finishGame();
@@ -188,33 +191,5 @@ public class GameData implements Serializable {
         this.updates_progress = updates_progress;
     }
 
-//    public String toString() {
-//        StringBuilder result = new StringBuilder();
-//        String newLine = System.getProperty("line.separator");
-//
-//        result.append( this.getClass().getName() );
-//        result.append( " Object {" );
-//        result.append(newLine);
-//
-//        //determine fields declared in this class only (no fields of superclass)
-//        Field[] fields = this.getClass().getDeclaredFields();
-//
-//        //print field names paired with their values
-//        for ( Field field : fields  ) {
-//            result.append("  ");
-//            try {
-//                result.append( field.getName() );
-//                result.append(": ");
-//                //requires access to private field:
-//                result.append( field.get(this) );
-//            } catch ( IllegalAccessException ex ) {
-//                System.out.println(ex);
-//            }
-//            result.append(newLine);
-//        }
-//        result.append("}");
-//
-//        return result.toString();
-//    }
 }
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Formularz nowego sklepu"></TextView>
+
+        <EditText
+            android:id="@+id/shopName"
+            android:text=""
+            android:hint="Nazwa sklepu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+        <RadioGroup
+            android:id="@+id/shopType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Gastronomia"
+                android:textSize="10sp"/>
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubrania"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pub"
+                android:textSize="10sp"/>
+
+            <RadioButton
+                android:id="@+id/radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RTV"
+                android:textSize="10sp"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/shopRadiusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <SeekBar
+            android:id="@+id/shopRadius"
+            android:max="1000"
+            android:min="1"
+            android:progress="500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/shopGeoLong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/shopGeoLat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/pobierzGeolokalizacje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dip"
+            android:paddingEnd="0dp"
+            android:text="Ustaw lokalizacje"></Button>
+
+        <Button
+            android:id="@+id/pobierzObraz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dip"
+            android:text="Ustaw obraz"></Button>
+
+        <Button
+            android:id="@+id/resetForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dip"
+            android:text="Resetuj formularz"></Button>
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dip"
+            android:background="@color/colorPrimary"
+            android:text="Dodaj nowy sklep"></Button>
+    </LinearLayout>
+</ScrollView>

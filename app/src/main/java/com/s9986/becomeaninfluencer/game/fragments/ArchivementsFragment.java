@@ -1,8 +1,10 @@
 package com.s9986.becomeaninfluencer.game.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,35 +13,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.s9986.becomeaninfluencer.R;
+import com.s9986.becomeaninfluencer.game.DetailViewModel;
+import com.s9986.becomeaninfluencer.persistence.GameData;
+import com.s9986.becomeaninfluencer.persistence.GameDataConstant;
 
 public class ArchivementsFragment extends Fragment {
 
-//    private GameData data;
-    private Handler mHandler = null;
-    private Runnable runnable = null;
-
-    private long lastUpdate;
-
-    private ImageButton play_button;
-
-    private Animation coin_animation;
-
-    private TextView textView;
-
-//    public PlayFragment(GameData data)
-//    {
-//        this.data = data;
-//    }
-
+    private TextView archivement_0_total_click;
+    private TextView archivement_1_total_points;
+    private TextView archivement_2_total_secounds;
+    private TextView archivement_3_total_spend;
+    private DetailViewModel model;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Bundle args = getArguments();
-
     }
 
     @Nullable
@@ -51,77 +45,15 @@ public class ArchivementsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        initCoinClickButtonAction();
-//        initCoinValueText();
-//        coin_animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation_animation);
-        textView = getView().findViewById(R.id.points_textView);
-
-//        SensorEventListener sensorListener = new SensorEventListener() {
-//            @Override
-//            public void onSensorChanged(SensorEvent event) {
-//                float x = event.values[0];
-//                float y = event.values[1];
-//                float z = event.values[2];
-//
-//                float accelerationSquareRoot = (x * x + y * y + z * z) / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
-//                long actualTime = event.timestamp;
-//                if (accelerationSquareRoot >= 2) //
-//                {
-//                    if (actualTime - lastUpdate < 500) {
-//                        return;
-//                    }
-//                    lastUpdate = actualTime;
-//
-//                    addCoins();
-//                }
-//            }
-//
-//            @Override
-//            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//            }
-//        };
-//        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-//        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        lastUpdate = System.currentTimeMillis();
-
-//        coinsRefresher();
+        model = ViewModelProviders.of(getActivity()).get(DetailViewModel.class);
+        prepareViews();
+        addObservables();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        if(mHandler != null && runnable != null){
-//            mHandler.removeCallbacksAndMessages(runnable);
-//        }
-
     }
-
-//    private void coinsRefresher()
-//    {
-//        mHandler = new Handler();
-//        runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                {
-//                    long coinsValue = data.getCoinsValue();
-//                    String text;
-//
-//                    if(coinsValue < data.getMaxCoinsValue())
-//                        text="Coins: "+coinsValue;
-//                    else
-//                        text="You are so rich!";
-//
-//                    textView.setText(text);
-//
-//                    if(mHandler != null){
-//                        mHandler.postDelayed(this, 100);
-//                    }
-//                }
-//            }
-//        };
-//        mHandler.post(runnable);
-//    }
 
     @Override
     public void onStop() {
@@ -131,34 +63,49 @@ public class ArchivementsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-//        coinsRefresher();
     }
 
-    public void initCoinClickButtonAction()
-    {
-//        play_button = (ImageButton) getView().findViewById(R.id.click_element);
-//        play_button.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v)
-//            {
-//                addCoins();
-//            }
-//        });
+    private void prepareViews(){
+        archivement_0_total_click = getView().findViewById(R.id.archivement_0_total_click);
+        archivement_1_total_points = getView().findViewById(R.id.archivement_1_total_points);
+        archivement_2_total_secounds = getView().findViewById(R.id.archivement_2_total_secounds);
+        archivement_3_total_spend = getView().findViewById(R.id.archivement_3_total_spend);
     }
 
-    private void initCoinValueText() {
-//        String text="Coins: "+data.getCoinsValue();
+    private void addObservables(){
+        model.fetchGameInProgress().observe(getViewLifecycleOwner(), new Observer<GameData>() {
+            @Override
+            public void onChanged(@Nullable GameData gameData) {
 
-//        TextView textView = getView().findViewById(R.id.points_textView);
-//        textView.setText(text);
-    }
+                Log.d("ArchivementsFragment", "fetchGameInProgress observe run ");
 
-    void addCoins()
-    {
-//        play_button.startAnimation(coin_animation);
+                int colorDone = ContextCompat.getColor(getContext(), R.color.colorDone);
+                int colorText = ContextCompat.getColor(getContext(), R.color.colorText);
 
-//        data.setCoinsValue(data.getCoinsValue() + (1 + data.getSeriousClickNum()));
+                if(gameData != null && gameData.getTotal_taps() >= 100){
+                    archivement_0_total_click.setTextColor(colorDone);
+                }else{
+                    archivement_0_total_click.setTextColor(colorText);
+                }
+
+                if(gameData != null && gameData.getTotal_points() >= 1000){
+                    archivement_1_total_points.setTextColor(colorDone);
+                }else{
+                    archivement_1_total_points.setTextColor(colorText);
+                }
+
+                if(gameData != null && gameData.getTotal_time_in_secound() >= 11){
+                    archivement_2_total_secounds.setTextColor(colorDone);
+                }else{
+                    archivement_2_total_secounds.setTextColor(colorText);
+                }
+
+                if(gameData != null && gameData.getTotal_spend() >= 1000){
+                    archivement_3_total_spend.setTextColor(colorDone);
+                }else{
+                    archivement_3_total_spend.setTextColor(colorText);
+                }
+            }
+        });
     }
 }

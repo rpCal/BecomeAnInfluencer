@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -34,5 +36,37 @@
         <activity android:name=".SettingsActivity" />
 
         <activity android:name=".RankingActivity" />
+
+        <activity
+            android:name=".FirebaseUIActivity"
+            android:label="@string/label_firebase_ui" />
+        <activity
+            android:name=".EmailPasswordActivity"
+            android:label="@string/label_emailpassword"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".GoogleSignInActivity"
+            android:label="@string/label_google_sign_in" />
+
+        <activity android:name=".NewPostActivity"
+            android:theme="@style/TabAppTheme" />
+        <activity android:name=".PostDetailActivity"
+            android:theme="@style/TabAppTheme" />
+        <activity android:name=".MainUserListActivity"
+            android:theme="@style/TabAppTheme"/>
+        <activity android:name=".ShopMapActivity"
+            android:theme="@style/TabAppTheme" />
+        <activity android:name=".AddAndEditShopActivity"
+            android:theme="@style/TabAppTheme" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC9cOEPC_ggjGwf71anbIPG7ljd6y_ITLw" />
+
     </application>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
 </manifest>
