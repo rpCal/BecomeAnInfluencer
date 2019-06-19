@@ -15,19 +15,20 @@ public class Shop {
     public String name;
     public String type;
     public String radius;
-    public String image;
+    public String imageRef;
 
     public Shop() {
         // Default constructor required for calls to DataSnapshot.getValue(Comment.class)
     }
 
-    public Shop(String uid, String name, String type, String radius, String longitude, String latitude) {
+    public Shop(String uid, String name, String type, String radius, String longitude, String latitude, String imageRef) {
         this.uid = uid;
         this.name = name;
         this.type = type;
         this.radius = radius;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.imageRef = imageRef;
     }
 
     public boolean hasLongitude(){
@@ -35,6 +36,9 @@ public class Shop {
     }
     public boolean hasLatitude(){
         return (latitude != null && latitude.length() > 0);
+    }
+    public boolean hasImage(){
+        return (imageRef != null && imageRef.length() > 0);
     }
 
     public double getLongitude(){
@@ -56,6 +60,7 @@ public class Shop {
         result.put("radius", radius);
         result.put("longitude", longitude);
         result.put("latitude", latitude);
+        result.put("imageRef", imageRef);
 
         return result;
     }

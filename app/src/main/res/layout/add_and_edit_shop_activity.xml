@@ -59,6 +59,7 @@
             android:id="@+id/shopRadiusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <SeekBar
             android:id="@+id/shopRadius"
             android:max="1000"
@@ -66,36 +67,66 @@
             android:progress="500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/shopGeoLong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/shopGeoLat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/pobierzGeolokalizacje"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="30dip"
-            android:paddingEnd="0dp"
-            android:text="Ustaw lokalizacje"></Button>
 
-        <Button
-            android:id="@+id/pobierzObraz"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:background="#eee"
             android:layout_height="wrap_content"
-            android:minHeight="30dip"
-            android:text="Ustaw obraz"></Button>
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/shopSetGeoLong"
+                android:text=""
+                android:hint="Longtitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/resetForm"
+            <EditText
+                android:id="@+id/shopSetGeoLat"
+                android:text=""
+                android:hint="Latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/pobierzGeolokalizacje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dip"
+                android:paddingEnd="0dp"
+                android:text="Pobierz aktualną pozycje" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#eee"
             android:layout_height="wrap_content"
-            android:minHeight="30dip"
-            android:text="Resetuj formularz"></Button>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnChoose"
+                android:text="Wybierz obraz"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:text="Wyślij obraz"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
 
         <Button
@@ -104,6 +135,13 @@
             android:layout_height="wrap_content"
             android:minHeight="50dip"
             android:background="@color/colorPrimary"
-            android:text="Dodaj nowy sklep"></Button>
+            android:text="Dodaj nowy sklep" />
+
+        <Button
+            android:id="@+id/resetForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dip"
+            android:text="Resetuj formularz" />
     </LinearLayout>
 </ScrollView>

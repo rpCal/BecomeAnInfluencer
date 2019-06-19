@@ -8,18 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.firebase.ui.auth.viewmodel.AuthViewModelBase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.s9986.becomeaninfluencer.game.DetailViewModel;
-import com.s9986.becomeaninfluencer.game.GameActivity;
-import com.s9986.becomeaninfluencer.persistence.GameData;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (mAuth.getCurrentUser()==null){
-                    Intent loginIntent = new Intent(MainActivity.this, EmailPasswordActivity.class);
+                    Intent loginIntent = new Intent(MainActivity.this, AuthFirebaseActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(loginIntent);
                 }
@@ -142,22 +133,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu_settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_menu_settings:
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivity(i);
-                return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu_settings, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.main_menu_settings:
+//                Intent i = new Intent(this, SettingsActivity.class);
+//                startActivity(i);
+//                return true;
+//        }
+//        return false;
+//    }
 
 //    private void testAddRankingGameData(){
 //

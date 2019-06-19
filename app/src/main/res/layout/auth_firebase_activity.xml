@@ -3,7 +3,6 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -47,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/grey_300"
         android:gravity="center_vertical">
 
         <LinearLayout
@@ -91,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_in"
+                android:background="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
             <Button
@@ -100,6 +99,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/create_account"
+                android:layout_marginLeft="5dp"
+                android:background="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
         </LinearLayout>
 
@@ -121,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="@string/sign_out"
+                android:background="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
             <Button
@@ -129,7 +131,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:layout_marginLeft="5dp"
                 android:text="Start aplikacji"
+                android:background="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
         </LinearLayout>
